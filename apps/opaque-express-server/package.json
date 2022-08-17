@@ -1,5 +1,5 @@
 {
-  "name": "@teamjayj/opaque-react-client",
+  "name": "@teamjayj/opaque-express-server",
   "version": "1.0.0",
   "private": true,
   "description": "An Express server for testing OPAQUE authentication",
