@@ -1,0 +1,13 @@
+{
+  "name": "@teamjayj/potls-react-client",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A React client for testing Password-over-TLS authentication",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
