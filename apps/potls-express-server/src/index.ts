@@ -1,29 +1,77 @@
 import express, { Request, Response } from "express";
+import bcrypt from 'bcrypt';
 
 const app = express();
 const port = 6969;
-
-// Map of users = (key, value) = (username, hashedPassword)
 const users: Map<string, string> = new Map();
 
-// should register a user; given its username and password
-app.post("/register", (req: Request, res: Response) => {
-  // should store username as key in a map
-  // should store plaintext password as hashed value in a map
+app.use(express.urlencoded({ extended: false }))
 
-  // install https://www.npmjs.com/package/bcrypt
-  // bcrypt function - hash the password for 10 rounds
-  // users.set(username, hashedPassword)
+app.get("/register", (req: Request, res: Response) => {
+  res.send(`
+    <div class="container">
+      <h1>Register</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
 
-  res.send("Registered a user");
+      <form action="/register" method="POST">
+          <label for="uname">Username:</label><br>
+          <input type="text" placeholder="Enter Username" id="uname" name="uname"><br>
+          <label for="pwd">Password:</label><br>
+          <input type="password" placeholder="Enter Password" id="pwd" name="pwd"><br><br>
+          <input type="submit" value="Submit">
+      </form>
+
+      <a href="/login">Login</a>
+  </div>
+  `)
 });
 
-// should login a user; given its username and passwordAttempt
-app.post("/login", (req: Request, res: Response) => {
-  // should retrieve user from a map using username
-  // should bcrypt compare hashed passwordAttempt and actual password
-  // if the same password, login in successful, otherwise fail
-  res.send("Succesful login");
+app.get("/login", (req: Request, res: Response) => {
+  res.send(`
+    <div class="container">
+        <h1>Login</h1>
+        <p>Please fill in this form to access the system.</p>
+        <hr>
+
+        <form action="/login" method="POST">
+            <label for="uname">Username:</label><br>
+            <input type="text" placeholder="Enter Username" id="uname" name="uname"><br>
+            <label for="pwd">Password:</label><br>
+            <input type="password" placeholder="Enter Password" id="pwd" name="pwd"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+
+        <a href="/register">Register</a>
+    </div>
+  `)
+});
+
+app.post("/register", async (req: Request, res: Response) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.pwd, 10)
+    users.set(req.body.uname, hashedPassword)
+    res.redirect('/login')
+  } catch {
+    res.redirect('/register')
+  }
+  console.log(users)
+});
+
+app.post("/login", async (req: Request, res: Response) => {
+  const password = String(users.get(req.body.uname))
+  
+  if (users.has(req.body.uname) == false) {
+    return res.status(400).send('Cannot find user')
+  } try {
+    if (await bcrypt.compare(req.body.pwd, password)) {
+        res.send('Success')
+    } else {
+        res.send('Login Failed')
+    }
+  } catch {
+    res.status(500).send()
+  }
 });
 
 app.listen(port, () => {
