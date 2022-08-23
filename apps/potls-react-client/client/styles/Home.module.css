@@ -1,24 +1,130 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,500);
+/*Daily UI #001 Design*/
+
+.spacing{
+  color:black;
+}
 
 
+
+/*HOME MODULE CSS*/
 .container {
   padding: 0 2rem;
+  
 }
 
 .main {
-  min-height: 100vh;
-  padding: 4rem 0;
+  min-height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  padding: 50px 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
+  min-width:750px;
+  margin:auto;
+  background-color:#ffc400;
+  border: 5px solid rgb(36, 36, 36);
+  box-shadow: .5rem .5rem 0 rgb(36, 36, 36);
+  border-radius: 10px;
+  	
+}
+
+.title {
+  margin: 10px;
+  font-weight: 400;
+  text-align: center;
+  font-size: 40px;
+  font-size: 2.5rem;
+  letter-spacing: 0px;
+  letter-spacing: 0.05rem;  
+}
+
+.title,
+.description {
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+  line-height: 1em;
+  font-weight: 400;
+  letter-spacing: 0px;
+  letter-spacing: 0.02rem;
+}
+
+.textboxes{
+  width:300px;
+  justify-content: center;
+  align-items: center; 
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputline {
+  background: none;
+  margin-bottom: 30px;
+  line-height: 2.5em;
+  color: white;
+  font-family: Helvetica;
+  font-weight: 300;
+  letter-spacing: 1.0px;
+  font-size: 1.0rem;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 8px;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  width: 100%;
+  outline:none;
+  padding-left: 10px;
+}
+
+.inputline::placeholder{
+  color:white;
+}
+
+.button1{
+  background-color: rgb(36, 36, 36);
+  color:white;
+  font-size:15px;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  border-radius: 5px;
+  margin-top: 30px;
+  height:40px;
+  width:150px;
+  letter-spacing: 0px;
+  letter-spacing: 0.05rem;  
+}
+
+.button1:hover{
+  background-color: transparent;
+  color:rgb(36, 36, 36);
+  border: 3px solid rgb(36, 36, 36);
+  font-size:15px;
+  font-family: Arial, Helvetica, sans-serif;
+  
+  border-radius: 5px;
+  margin-top: 30px;
+  height:40px;
+  width:150px;
+  letter-spacing: 0px;
+  letter-spacing: 0.05rem;  
+}
+
+.facebook{
+  color:blue;
 }
 
 .footer {
   display: flex;
   flex: 1;
   padding: 2rem 0;
+  margin-top: auto;
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
@@ -31,6 +137,7 @@
   flex-grow: 1;
 }
 
+/*
 .title a {
   color: #0070f3;
   text-decoration: none;
@@ -41,23 +148,8 @@
 .title a:active {
   text-decoration: underline;
 }
+*/
 
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-}
-
-.title,
-.description {
-  text-align: center;
-}
-
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
 
 
 
@@ -77,9 +169,6 @@
   .card,
   .footer {
     border-color: #222;
-  }
-  .code {
-    background: #111;
   }
   .logo img {
     filter: invert(1);
