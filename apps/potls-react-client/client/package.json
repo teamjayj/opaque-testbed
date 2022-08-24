@@ -1,9 +1,10 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "proxy":"http://localhost:6969",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node ../../potls-express-server/dist/server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
