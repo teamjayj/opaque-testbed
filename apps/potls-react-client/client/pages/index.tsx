@@ -1,9 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-
-
 import React from 'react'
 
 const Home: NextPage = () => {
@@ -17,42 +14,25 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Hello there!
+          Login
         </h1>
 
         <p className={styles.description}>
-        We're almost done. Before using our services you need to create an account.
+        Please fill in this form to access the system.
         </p>
 
-        <div className={'styles.bold-line'}></div>
-          <div className={styles.containers}>
-            <div className={styles.window}>
-              <div className={styles.overlay}></div>
-              <div className={styles.content}>
-                <div className='input-fields'>
-                  <input type='text' placeholder='Username' className='input-line full-width'></input>
-                  <input type='email' placeholder='Email' className='input-line full-width'></input>
-                  <input type='password' placeholder='Password' className='input-line full-width'></input>
-                </div>
-                <div className={styles.spacing}>or continue with <span className='highlight'>Facebook</span></div>
-                <div><button className='ghost-round full-width'>Create Account</button></div>
-              </div>
-            </div>
+        
+          <div className={styles.textboxes}>
+            <form action="/register" method="POST">
+              <input type='text' placeholder='Username' className={styles.inputline} id="uname" name="uname"></input>
+              <input type='password' placeholder='Password' className={styles.inputline} id="pwd" name="pwd"></input>
+            <div className={styles.spacing}>or click here to <a className={styles.facebook} href="register.tsx">register</a></div>
+            <button className={styles.button1}>Login</button>
+            </form>
           </div>
       </main>
       
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer> 
+      
     </div>
     </React.Fragment>
   )
