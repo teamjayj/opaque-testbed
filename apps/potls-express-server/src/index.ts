@@ -13,7 +13,6 @@ app.get("/register", (req: Request, res: Response) => {
       <h1>Register</h1>
       <p>Please fill in this form to create an account.</p>
       <hr>
-
       <form action="/register" method="POST">
           <label for="uname">Username:</label><br>
           <input type="text" placeholder="Enter Username" id="uname" name="uname"><br>
@@ -21,7 +20,6 @@ app.get("/register", (req: Request, res: Response) => {
           <input type="password" placeholder="Enter Password" id="pwd" name="pwd"><br><br>
           <input type="submit" value="Submit">
       </form>
-
       <a href="/login">Login</a>
   </div>
   `)
@@ -33,7 +31,6 @@ app.get("/login", (req: Request, res: Response) => {
         <h1>Login</h1>
         <p>Please fill in this form to access the system.</p>
         <hr>
-
         <form action="/login" method="POST">
             <label for="uname">Username:</label><br>
             <input type="text" placeholder="Enter Username" id="uname" name="uname"><br>
@@ -41,7 +38,6 @@ app.get("/login", (req: Request, res: Response) => {
             <input type="password" placeholder="Enter Password" id="pwd" name="pwd"><br><br>
             <input type="submit" value="Submit">
         </form>
-
         <a href="/register">Register</a>
     </div>
   `)
