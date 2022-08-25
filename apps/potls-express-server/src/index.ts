@@ -10,13 +10,16 @@ app.use(cors());
 
 const userDatabase: Map<string, string> = new Map();
 
-function throwErrorIfMissing(username: string, password: string): void {
-    if (username == null) {
-        throw new Error("Username cannot be null");
+function throwErrorIfEmptyUsernameOrPassword(
+    username: string,
+    password: string
+): void {
+    if (username == null || username.length === 0) {
+        throw new Error("Username cannot be empty");
     }
 
-    if (password == null) {
-        throw new Error("Password cannot be null");
+    if (password == null || password.length === 0) {
+        throw new Error("Password cannot be empty");
     }
 }
 
@@ -26,7 +29,7 @@ app.post(
         try {
             const { username, password: plaintextPassword } = req.body;
 
-            throwErrorIfMissing(username, plaintextPassword);
+            throwErrorIfEmptyUsernameOrPassword(username, plaintextPassword);
 
             if (userDatabase.has(username)) {
                 throw new Error(`User '${username}' is already registered`);
@@ -47,7 +50,7 @@ app.post("/login", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { username, password: plaintextPasswordAttempt } = req.body;
 
-        throwErrorIfMissing(username, plaintextPasswordAttempt);
+        throwErrorIfEmptyUsernameOrPassword(username, plaintextPasswordAttempt);
 
         const hashedPassword = userDatabase.get(username);
 
