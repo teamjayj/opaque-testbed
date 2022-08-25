@@ -4,7 +4,7 @@
   "proxy": "http://localhost:6969",
   "private": true,
   "scripts": {
-    "dev": "node ../../potls-express-server/dist/server.js",
+    "dev": "",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

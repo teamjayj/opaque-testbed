@@ -4,6 +4,7 @@
   "private": true,
   "description": "An Express server for testing Password-over-TLS authentication",
   "main": "dist/index.js",
+  "Access-Control-Allow-Origin": "*",
   "scripts": {
     "build": "tsc",
     "start": "node .",
