@@ -1,80 +1,80 @@
-import express, { Request, Response } from "express";
-import bcrypt from 'bcrypt';
-import cors from 'cors';
+import express, { NextFunction, Request, Response } from "express";
+import bcrypt from "bcrypt";
+import cors from "cors";
 
 const app = express();
-const port = 6969;
-const users: Map<string, string> = new Map();
+const port = process.env.PORT || 6969;
 
+app.use(express.json());
 app.use(cors());
 
-app.use(express.urlencoded({ extended: false }))
+const userDatabase: Map<string, string> = new Map();
 
-/*
-app.get("/register", (req: Request, res: Response) => {
-  res.send(`
-    <div class="container">
-      <h1>Register</h1>
-      <p>Please fill in this form to create an account.</p>
-      <hr>
-      <form action="/register" method="POST">
-          <label for="uname">Username:</label><br>
-          <input type="text" placeholder="Enter Username" id="uname" name="uname"><br>
-          <label for="pwd">Password:</label><br>
-          <input type="password" placeholder="Enter Password" id="pwd" name="pwd"><br><br>
-          <input type="submit" value="Submit">
-      </form>
-      <a href="/login">Login</a>
-  </div>
-  `)
-});
-
-app.get("/login", (req: Request, res: Response) => {
-  res.send(`
-    <div class="container">
-        <h1>Login</h1>
-        <p>Please fill in this form to access the system.</p>
-        <hr>
-        <form action="/login" method="POST">
-            <label for="uname">Username:</label><br>
-            <input type="text" placeholder="Enter Username" id="uname" name="uname"><br>
-            <label for="pwd">Password:</label><br>
-            <input type="password" placeholder="Enter Password" id="pwd" name="pwd"><br><br>
-            <input type="submit" value="Submit">
-        </form>
-        <a href="/register">Register</a>
-    </div>
-  `)
-});
-*/
-
-app.post("/register", async (req: Request, res: Response) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.pwd, 10)
-    users.set(req.body.uname, hashedPassword)
-    res.redirect('/login')
-  } catch {
-    res.redirect('/register')
-  }
-  console.log(users)
-});
-
-app.post("/login", async (req: Request, res: Response) => {
-  const password = String(users.get(req.body.uname))
-  
-  if (users.has(req.body.uname) == false) {
-    return res.status(400).send('Cannot find user')
-  } try {
-    if (await bcrypt.compare(req.body.pwd, password)) {
-        res.send('Success')
-    } else {
-        res.send('Login Failed')
+function throwErrorIfMissing(username: string, password: string): void {
+    if (username == null) {
+        throw new Error("Username cannot be null");
     }
-  } catch {
-    res.status(500).send()
-  }
+
+    if (password == null) {
+        throw new Error("Password cannot be null");
+    }
+}
+
+app.post(
+    "/register",
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { username, password: plaintextPassword } = req.body;
+
+            throwErrorIfMissing(username, plaintextPassword);
+
+            if (userDatabase.has(username)) {
+                throw new Error(`User '${username}' is already registered`);
+            }
+
+            const hashedPassword = await bcrypt.hash(plaintextPassword, 10);
+
+            userDatabase.set(username, hashedPassword);
+
+            return res.json({ message: "Successfully registered" });
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+app.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { username, password: plaintextPasswordAttempt } = req.body;
+
+        throwErrorIfMissing(username, plaintextPasswordAttempt);
+
+        const hashedPassword = userDatabase.get(username);
+
+        if (hashedPassword == null) {
+            throw new Error(`Cannot find user: ${username}`);
+        }
+
+        const isValidLogin = await bcrypt.compare(
+            plaintextPasswordAttempt,
+            hashedPassword
+        );
+
+        if (isValidLogin) {
+            return res.json({ success: true });
+        } else {
+            return res.status(401).json({ message: "Invalid login" });
+        }
+    } catch (error) {
+        next(error);
+    }
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err);
+    return res.status(500).json({ message: err.message });
 });
 
 app.listen(port, () => {
-  console.log("App is listening to port: " + port);
+    console.log("App is listening to port: " + port);
 });
