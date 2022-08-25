@@ -1,12 +1,16 @@
 import express, { Request, Response } from "express";
 import bcrypt from 'bcrypt';
+import cors from 'cors';
 
 const app = express();
 const port = 6969;
 const users: Map<string, string> = new Map();
 
+app.use(cors());
+
 app.use(express.urlencoded({ extended: false }))
 
+/*
 app.get("/register", (req: Request, res: Response) => {
   res.send(`
     <div class="container">
@@ -42,6 +46,7 @@ app.get("/login", (req: Request, res: Response) => {
     </div>
   `)
 });
+*/
 
 app.post("/register", async (req: Request, res: Response) => {
   try {
