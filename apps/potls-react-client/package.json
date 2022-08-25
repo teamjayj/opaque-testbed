@@ -4,10 +4,29 @@
   "private": true,
   "description": "A React client for testing Password-over-TLS authentication",
   "main": "index.js",
+  "proxy": "http://localhost:6969",
   "scripts": {
+    "dev": "next dev --port 3003",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "next": "^12.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.7.11",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "eslint": "8.22.0",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "typescript": "^4.7.4"
+  }
 }
