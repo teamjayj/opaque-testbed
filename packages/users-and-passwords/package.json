@@ -1,0 +1,17 @@
+{
+    "name": "users-and-passwords",
+    "version": "0.0.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "private": true,
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "typescript": "^4.7.4"
+    }
+}
