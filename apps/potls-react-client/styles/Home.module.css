@@ -1,18 +1,8 @@
-/*Daily UI #001 Design*/
-
-.spacing{
-  color:black;
-}
-
-
-
-/*HOME MODULE CSS*/
 .container {
   padding: 0 2rem;
-  
 }
 
-.main {
+.main, .main_login {
   min-height: 500px;
   top: 50%;
   left: 50%;
@@ -26,11 +16,17 @@
   align-items: center; 
   min-width:750px;
   margin:auto;
-  background-color:#ffc400;
   border: 5px solid rgb(36, 36, 36);
   box-shadow: .5rem .5rem 0 rgb(36, 36, 36);
   border-radius: 10px;
-  	
+}
+
+.main{
+  background-color:#ffc400;
+}
+
+.main_login{
+  background-color: white;
 }
 
 .title {
@@ -43,8 +39,11 @@
   letter-spacing: 0.05rem;  
 }
 
-.title,
-.description {
+.title a{
+  color:#ffc400;
+}
+
+.title, .description {
   text-align: center;
 }
 
@@ -65,16 +64,14 @@
   flex-direction: column;
 }
 
-.inputline {
+.inputline, .inputline_login {
   background: none;
   margin-bottom: 30px;
   line-height: 2.5em;
-  color: white;
   font-family: Helvetica;
   font-weight: 300;
   letter-spacing: 1.0px;
   font-size: 1.0rem;
-  border: 3px solid rgb(255, 255, 255);
   border-radius: 8px;
   -webkit-transition: all .2s ease;
   transition: all .2s ease;
@@ -83,74 +80,73 @@
   padding-left: 10px;
 }
 
+.inputline{
+  color: white;
+  border: 3px solid rgb(255, 255, 255);
+}
+
 .inputline::placeholder{
   color:white;
+}
+
+.inputline_login {
+  color: rgb(36, 36, 36);
+  border: 3px solid rgb(36, 36, 36);
+}
+
+.inputline_login::placeholder{
+  color:rgb(36, 36, 36);
+}
+
+.button1, .button2{
+  font-size:15px;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  border-radius: 5px;
+  height:40px;
+  width:150px;
+  letter-spacing: 0px;
+  letter-spacing: 0.05rem; 
+  display:block;
+  margin-left:auto; 
+  margin-right: auto;
+  margin-top:30px;
+  font-weight: bold;
 }
 
 .button1{
   background-color: rgb(36, 36, 36);
   color:white;
+}
+
+.button2{
+  background-color:#ffc400;
+  color: white;
+}
+
+.button1:hover, .button2:hover{
+  background-color: transparent;
   font-size:15px;
   font-family: Arial, Helvetica, sans-serif;
-  border: none;
   border-radius: 5px;
-  margin-top: 30px;
   height:40px;
   width:150px;
   letter-spacing: 0px;
   letter-spacing: 0.05rem;  
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .button1:hover{
-  background-color: transparent;
   color:rgb(36, 36, 36);
   border: 3px solid rgb(36, 36, 36);
-  font-size:15px;
-  font-family: Arial, Helvetica, sans-serif;
-  
-  border-radius: 5px;
-  margin-top: 30px;
-  height:40px;
-  width:150px;
-  letter-spacing: 0px;
-  letter-spacing: 0.05rem;  
 }
 
-.facebook{
-  color:blue;
+.button2:hover{
+  background-color: transparent;
+  color:rgb(36, 36, 36);
+  border: 3px solid #ffc400;
 }
-
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  margin-top: auto;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-}
-
-/*
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
-*/
-
-
-
 
 .logo {
   height: 1em;
@@ -173,3 +169,4 @@
     filter: invert(1);
   }
 }
+
