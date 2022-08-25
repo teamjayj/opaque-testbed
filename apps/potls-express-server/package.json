@@ -4,6 +4,7 @@
   "private": true,
   "description": "An Express server for testing Password-over-TLS authentication",
   "main": "dist/index.js",
+  "Access-Control-Allow-Origin": "*",
   "scripts": {
     "build": "tsc",
     "start": "node .",
@@ -15,6 +16,7 @@
     "express": "^4.18.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "typescript": "^4.7.4"
   }
