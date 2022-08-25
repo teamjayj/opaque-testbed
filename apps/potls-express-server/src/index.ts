@@ -64,7 +64,7 @@ app.post("/login", async (req: Request, res: Response, next: NextFunction) => {
         );
 
         if (isValidLogin) {
-            return res.json({ success: true });
+            return res.json({ message: "Successfully logged in" });
         } else {
             return res.status(401).json({ message: "Invalid login" });
         }
