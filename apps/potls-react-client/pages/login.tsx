@@ -53,8 +53,8 @@ class App extends React.Component {
                         <link rel="icon" href="/favicon.ico" />
                     </Head>
 
-                    <main className={styles.main}>
-                        <h1 className={styles.title}>PoTLS Login</h1>
+                    <main className={styles.main_login}>
+                        <h1 className={styles.title}>PoTLS <a>Login</a></h1>
 
                         <p className={styles.description}>
                             Log in to an account using Password-over-TLS
@@ -65,7 +65,7 @@ class App extends React.Component {
                                 <input
                                     type="text"
                                     placeholder="Username"
-                                    className={styles.inputline}
+                                    className={styles.inputline_login}
                                     name="username"
                                     value={this.state.username}
                                     onChange={this.handleChangeUsername}
@@ -74,7 +74,7 @@ class App extends React.Component {
                                 <input
                                     type="password"
                                     placeholder="Password"
-                                    className={styles.inputline}
+                                    className={styles.inputline_login}
                                     id="password"
                                     name="password"
                                     value={this.state.password}
@@ -83,7 +83,7 @@ class App extends React.Component {
 
                                 <button
                                     type="submit"
-                                    className={styles.button1}
+                                    className={styles.button2}
                                 >
                                     Login
                                 </button>
