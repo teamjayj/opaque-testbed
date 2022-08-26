@@ -1,9 +1,9 @@
+import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import cors from "cors";
 
 const app = express();
-const port = process.env.PORT || 6969;
 
 app.use(express.json());
 app.use(cors());
@@ -23,6 +23,10 @@ function throwErrorIfEmptyUsernameOrPassword(
     }
 }
 
+function isLoadTestingEnvironment(): boolean {
+    return process.env.NODE_ENV === "load-testing";
+}
+
 app.post(
     "/register",
     async (req: Request, res: Response, next: NextFunction) => {
@@ -37,7 +41,9 @@ app.post(
 
             const hashedPassword = await bcrypt.hash(plaintextPassword, 10);
 
-            userDatabase.set(username, hashedPassword);
+            if (!isLoadTestingEnvironment()) {
+                userDatabase.set(username, hashedPassword);
+            }
 
             return res.json({ message: "Successfully registered" });
         } catch (error) {
@@ -78,6 +84,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     return res.status(500).json({ message: err.message });
 });
 
-app.listen(port, () => {
-    console.log("App is listening to port: " + port);
-});
+export default app;

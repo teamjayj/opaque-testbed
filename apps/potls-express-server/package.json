@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "An Express server for testing Password-over-TLS authentication",
-  "main": "dist/index.js",
-  "Access-Control-Allow-Origin": "*",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "start": "node .",
@@ -15,6 +14,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1"
   },
   "devDependencies": {
