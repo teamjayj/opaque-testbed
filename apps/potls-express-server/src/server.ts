@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { createApp, isLoadTestingEnvironment } from "./app";
 import { parse } from "papaparse";
 import { createReadStream } from "fs";

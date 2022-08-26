@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express, { Application, NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import cors from "cors";
