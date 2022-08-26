@@ -1,5 +1,5 @@
 {
-  "name": "@teamjayj/potls-express-server",
+  "name": "potls-express-server",
   "version": "1.0.0",
   "private": true,
   "description": "An Express server for testing Password-over-TLS authentication",
