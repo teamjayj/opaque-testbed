@@ -1,12 +1,13 @@
 {
-  "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig to read more about this file */
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "outDir": "./dist"
-  },
-  "include": ["src"]
+    "compilerOptions": {
+        /* Visit https://aka.ms/tsconfig to read more about this file */
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "outDir": "./dist"
+    },
+    "include": ["src"],
+    "exclude": ["**/*spec.ts"]
 }

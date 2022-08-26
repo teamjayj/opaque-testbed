@@ -16,7 +16,7 @@ function throwErrorIfEmptyUsernameOrPassword(
     }
 }
 
-function isLoadTestingEnvironment(): boolean {
+export function isLoadTestingEnvironment(): boolean {
     return process.env.NODE_ENV === "load-testing";
 }
 
