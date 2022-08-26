@@ -6,8 +6,10 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "start": "k6 run -e HOSTNAME=localhost:6969 dist/test.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "benchmark:potls-register": "k6 run --config k6-options.json -e HOSTNAME=localhost:8000 dist/potls-client-register.test.js",
+    "benchmark:potls-login": "k6 run --config k6-options.json -e HOSTNAME=localhost:8000 dist/potls-client-login.test.js",
+    "benchmark:opaque-register": "k6 run --config k6-options.json -e HOSTNAME=localhost:8001 dist/opaque-client-register.test.js",
+    "benchmark:opaque-login": "k6 run --config k6-options.json -e HOSTNAME=localhost:8001 dist/opaque-client-login.test.js"
   },
   "keywords": [],
   "author": "",
