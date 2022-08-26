@@ -21,12 +21,14 @@ class App extends React.Component {
             .post("http://localhost:6969/register", user)
             .then((res: AxiosResponse) => {
                 if (res.status === 200) {
-                    console.log(res.data);
+                    if (confirm("User Successfully Registered")) {
+                        window.location.reload();
+                    }
                 }
             })
             .catch((error: AxiosError) => {
                 const { message: errorMessage }: any = error.response?.data;
-                console.log(errorMessage);
+                confirm("Failed to register user");
             });
     };
 
