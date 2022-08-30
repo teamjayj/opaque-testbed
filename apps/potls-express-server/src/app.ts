@@ -36,13 +36,15 @@ export function createApp(userDatabase: Map<string, string>): Application {
                     plaintextPassword
                 );
 
-                if (userDatabase.has(username)) {
-                    throw new Error(`User '${username}' is already registered`);
-                }
-
                 const hashedPassword = await bcrypt.hash(plaintextPassword, 10);
 
                 if (!isLoadTestingEnvironment()) {
+                    if (userDatabase.has(username)) {
+                        throw new Error(
+                            `User '${username}' is already registered`
+                        );
+                    }
+
                     userDatabase.set(username, hashedPassword);
                 }
 
