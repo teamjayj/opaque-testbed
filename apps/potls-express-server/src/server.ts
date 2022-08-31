@@ -4,7 +4,7 @@ import { parse } from "papaparse";
 import { createReadStream } from "fs";
 import { PotlsHashedCredential } from "./types";
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3100;
 
 const userDatabase: Map<string, string> = new Map();
 
