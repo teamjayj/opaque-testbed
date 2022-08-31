@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { createApp, isLoadTestingEnvironment } from "./app";
-import { parse } from "papaparse";
+import papaparse from "papaparse";
 import { createReadStream } from "fs";
 import { PotlsHashedCredential } from "./types";
 
@@ -9,7 +9,7 @@ const port = process.env.PORT || 3100;
 const userDatabase: Map<string, string> = new Map();
 
 if (isLoadTestingEnvironment()) {
-    parse(createReadStream("data/potls-server-store.csv"), {
+    papaparse.parse(createReadStream("data/potls-server-store.csv"), {
         header: true,
         step: (result) => {
             const { user_id: username, hashed_password: hashedPassword } =
