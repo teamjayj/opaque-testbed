@@ -92,7 +92,7 @@ const serverRecords: OpaqueServerRecord[] = [];
             expectedAuthKey: serverStore.expectedAuthResult,
         });
 
-        break;
+        console.log(`Generating for user ${userIndex + 1}`);
     }
 
     await clientRegisterCsv.writeRecords(clientRegisterRecords);
