@@ -20,8 +20,8 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@teamjayj/opaque-cloudflare-driver": "^0.1",
-    "@teamjayj/opaque-core": "^0.1.2",
+    "@teamjayj/opaque-cloudflare-driver": "^0.2",
+    "@teamjayj/opaque-core": "^0.2",
     "csv-writer": "^1.6.0",
     "users-and-passwords": "*",
     "uuid": "^8.3.2"
