@@ -1,0 +1,24 @@
+{
+  "name": "benchmark-result-cleaner",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "split": "node dist/split.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/ndjson": "^2.0.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "ndjson": "^2.0.0",
+    "node-jq": "^2.3.3"
+  }
+}
