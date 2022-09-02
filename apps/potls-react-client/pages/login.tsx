@@ -18,7 +18,7 @@ class App extends React.Component {
         };
 
         axios
-            .post("http://localhost:6969/login", user)
+            .post("http://localhost:3100/login", user)
             .then((res: AxiosResponse) => {
                 if (res.status === 200) {
                     if (confirm("Login is Successful")) {
