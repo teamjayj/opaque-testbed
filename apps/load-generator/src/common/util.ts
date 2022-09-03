@@ -5,6 +5,7 @@ import { trialTestRunOptions, fullTestRunOptions } from "./options";
 import papaparse from "https://jslib.k6.io/papaparse/5.1.1/index.js";
 // @ts-ignore
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
+import { RefinedParams } from "k6/http";
 
 export function getUrlWithHost(route: string): string {
     return `http://${__ENV.HOSTNAME}/${route}`;
@@ -44,7 +45,7 @@ export const getSummaryOptions = (data: any, outputFilename: string) => {
 export const getTestOptions = () =>
     isTrialTestRun() ? trialTestRunOptions : fullTestRunOptions;
 
-export const defaultRequestParameters = {
+export const defaultRequestParameters: RefinedParams<any> = {
     headers: {
         "Content-Type": "application/json",
     },
