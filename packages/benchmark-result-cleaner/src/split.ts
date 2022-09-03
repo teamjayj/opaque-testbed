@@ -18,7 +18,7 @@ export async function query(testRun: string, metric: string): Promise<void> {
 }
 
 (async () => {
-    const testRun = "my_test_result";
+    const testRun = "trial-result-opaque-register";
 
     const metrics = [
         "vus",

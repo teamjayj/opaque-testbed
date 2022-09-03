@@ -19,6 +19,7 @@ export async function convertToCSV(
         header: [
             { id: "date", title: "date" },
             { id: "value", title: "value" },
+            { id: "url", title: "url" },
             ...headers,
         ],
     });
@@ -39,6 +40,7 @@ async function readRecords(
                 records.push({
                     date: point.data.time,
                     value: point.data.value,
+                    url: point.data.tags?.url,
                 });
             })
             .on("error", (error) => reject(error))
@@ -47,7 +49,7 @@ async function readRecords(
 }
 
 (async () => {
-    const testRun = "my_test_result";
+    const testRun = "trial-result-opaque-register";
 
     const metrics = [
         "vus",

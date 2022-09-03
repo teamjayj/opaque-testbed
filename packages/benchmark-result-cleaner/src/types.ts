@@ -1,4 +1,4 @@
-export type Tag = {
+export type Tags = {
     url?: string;
 };
 
@@ -7,8 +7,8 @@ export type Point = {
     data: {
         time: string;
         value: number;
+        tags?: Tags;
     };
-    tag?: Tag;
     metric: string;
 };
 
@@ -20,4 +20,5 @@ export type CsvHeader = {
 export type CsvRecord = {
     date: string;
     value: string | number;
+    url?: string;
 };
