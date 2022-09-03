@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc",
     "split": "node dist/split.js",
+    "convert": "node dist/convert.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

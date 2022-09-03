@@ -1,23 +1,35 @@
 import jq from "node-jq";
 import fs from "fs";
 
-const resultFilename = "my_test_result";
-
-export async function query(metric: string, resultFilename: string) {
+export async function query(testRun: string, metric: string): Promise<void> {
     const filter = `select(.type=="Point" and .metric == "${metric}")`;
 
-    const output = await jq.run(filter, `data/input/${resultFilename}.json`, {
+    const output = await jq.run(filter, `data/input/${testRun}.json`, {
         output: "compact",
     });
 
+    const splitOutputDirectory = `data/output/${testRun}/json`;
+
+    fs.mkdirSync(splitOutputDirectory, { recursive: true });
     fs.writeFileSync(
-        `data/output/${resultFilename}/${metric}.json`,
+        `${splitOutputDirectory}/${metric}.json`,
         output as string
     );
 }
 
 (async () => {
-    await query("vus", resultFilename);
-    await query("http_reqs", resultFilename);
-    await query("http_req_duration", resultFilename);
+    const testRun = "my_test_result";
+
+    const metrics = [
+        "vus",
+        "http_reqs",
+        "http_req_duration",
+        "http_req_failed",
+        "data_received",
+        "data_sent",
+    ];
+
+    for (const metric of metrics) {
+        await query(testRun, metric);
+    }
 })();
