@@ -17,8 +17,17 @@ export type CsvHeader = {
     title: string;
 };
 
+export type Statistics = {
+    min: number;
+    max: number;
+    mean: number;
+    median: number;
+    p90: number;
+    p95: number;
+};
+
 export type CsvRecord = {
     date: string;
     value: string | number;
     url?: string;
-};
+} & Partial<Statistics>;
