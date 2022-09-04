@@ -19,13 +19,13 @@ export async function convertToCSV(
         header: [
             { id: "date", title: "date" },
             { id: "value", title: "value" },
-            { id: "url", title: "url" },
             { id: "min", title: "min" },
             { id: "max", title: "max" },
             { id: "mean", title: "mean" },
             { id: "median", title: "median" },
             { id: "p90", title: "p90" },
             { id: "p95", title: "p95" },
+            { id: "url", title: "url" },
             ...headers,
         ],
     });
@@ -116,7 +116,7 @@ async function readRecords(
 }
 
 (async () => {
-    const testRun = "trial-result-opaque-register";
+    const testRun = "trial-result-potls-register";
 
     const metrics = [
         "vus",
