@@ -5,7 +5,27 @@
   "description": "A React client for testing OPAQUE authentication",
   "main": "index.js",
   "scripts": {
+    "dev": "next dev --port 3003",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "next": "^12.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "18.7.11",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5",
+    "tsconfig": "*",
+    "typescript": "^4.8.2"
   },
   "keywords": [],
   "author": "",
