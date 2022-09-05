@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "csv-writer": "^1.6.0",
+    "date-fns": "^2.29.2",
     "inquirer": "^9.1.1",
     "ndjson": "^2.0.0",
     "node-jq": "^2.3.3"

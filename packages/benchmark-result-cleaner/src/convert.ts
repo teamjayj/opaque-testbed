@@ -3,6 +3,7 @@ import { CsvHeader, CsvRecord, Point, Statistics } from "./types";
 import fs from "fs";
 import ndjson from "ndjson";
 import inquirer from "inquirer";
+import { format } from "date-fns";
 
 export async function convertToCSV(
     resultFilename: string,
@@ -105,7 +106,7 @@ async function readRecords(
                 );
 
                 records.push({
-                    date,
+                    date: format(new Date(date), "H:mm:ss.SSS"),
                     value,
                     url,
                     ...stats,
