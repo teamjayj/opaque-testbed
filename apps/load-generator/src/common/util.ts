@@ -15,7 +15,7 @@ export function loadCSV(fileName: string): [] {
     return new SharedArray(
         fileName,
         () =>
-            papaparse.parse(open("../data/" + fileName), {
+            papaparse.parse(open("../data/input/" + fileName), {
                 header: true,
             }).data
     );
@@ -34,7 +34,7 @@ export const getTestRunType = (): string => {
 export const isTrialTestRun = (): boolean => getTestRunType() === "trial";
 
 export const getSummaryOptions = (data: any, outputFilename: string) => {
-    const jsonFileName = `${getTestRunType()}-summary-${outputFilename}.json`;
+    const jsonFileName = `data/output/${getTestRunType()}-summary-${outputFilename}.json`;
 
     return {
         stdout: textSummary(data, { indent: " ", enableColors: true }),

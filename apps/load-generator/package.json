@@ -6,14 +6,14 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "trial:potls-register": "k6 run -o json=trial-result-potls-register.json -e HOSTNAME=localhost:3100 -e TEST_RUN_TYPE=trial dist/potls-client-register.k6.js",
-    "trial:potls-login": "k6 run -o json=trial-result-potls-login.json -e HOSTNAME=localhost:3100 -e TEST_RUN_TYPE=trial dist/potls-client-login.k6.js",
-    "full:potls-register": "k6 run -o json=full-result-potls-register.json -e HOSTNAME=localhost:3100 -e TEST_RUN_TYPE=full dist/potls-client-register.k6.js",
-    "full:potls-login": "k6 run -o json=full-result-potls-login.json -e HOSTNAME=localhost:3100 -e TEST_RUN_TYPE=full dist/potls-client-login.k6.js",
-    "trial:opaque-register": "k6 run -o json=trial-result-opaque-register.json -e HOSTNAME=localhost:3101 -e TEST_RUN_TYPE=trial dist/opaque-client-register.k6.js",
-    "trial:opaque-login": "k6 run -o json=trial-result-opaque-login.json -e HOSTNAME=localhost:3101 -e TEST_RUN_TYPE=trial dist/opaque-client-login.k6.js",
-    "full:opaque-register": "k6 run -o json=full-result-opaque-register.json -e HOSTNAME=localhost:3101 -e TEST_RUN_TYPE=full dist/opaque-client-register.k6.js",
-    "full:opaque-login": "k6 run -o json=full-result-opaque-login.json -e HOSTNAME=localhost:3101 -e TEST_RUN_TYPE=full dist/opaque-client-login.k6.js"
+    "trial:potls-register": "k6 run -o json=data/output/trial-result-potls-register.json -e HOSTNAME=localhost:3100 -e TEST_RUN_TYPE=trial dist/potls-client-register.k6.js",
+    "trial:potls-login": "k6 run -o json=data/output/trial-result-potls-login.json -e HOSTNAME=localhost:3100 -e TEST_RUN_TYPE=trial dist/potls-client-login.k6.js",
+    "full:potls-register": "k6 run -o json=data/output/full-result-potls-register.json -e HOSTNAME=localhost:3100 -e TEST_RUN_TYPE=full dist/potls-client-register.k6.js",
+    "full:potls-login": "k6 run -o json=data/output/full-result-potls-login.json -e HOSTNAME=localhost:3100 -e TEST_RUN_TYPE=full dist/potls-client-login.k6.js",
+    "trial:opaque-register": "k6 run -o json=data/output/trial-result-opaque-register.json -e HOSTNAME=localhost:3101 -e TEST_RUN_TYPE=trial dist/opaque-client-register.k6.js",
+    "trial:opaque-login": "k6 run -o json=data/output/trial-result-opaque-login.json -e HOSTNAME=localhost:3101 -e TEST_RUN_TYPE=trial dist/opaque-client-login.k6.js",
+    "full:opaque-register": "k6 run -o json=data/output/full-result-opaque-register.json -e HOSTNAME=localhost:3101 -e TEST_RUN_TYPE=full dist/opaque-client-register.k6.js",
+    "full:opaque-login": "k6 run -o json=data/output/full-result-opaque-login.json -e HOSTNAME=localhost:3101 -e TEST_RUN_TYPE=full dist/opaque-client-login.k6.js"
   },
   "keywords": [],
   "author": "",
