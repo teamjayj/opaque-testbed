@@ -27,43 +27,43 @@ export const fullTestRunOptions: Options = {
             startVUs: 1,
             stages: [
                 {
-                    duration: "110s",
+                    duration: "10s",
                     target: 100,
                 },
                 {
-                    duration: "100s",
+                    duration: "10s",
                     target: 90,
                 },
                 {
-                    duration: "90s",
+                    duration: "10s",
                     target: 80,
                 },
                 {
-                    duration: "80s",
+                    duration: "10s",
                     target: 70,
                 },
                 {
-                    duration: "70s",
+                    duration: "10s",
                     target: 60,
                 },
                 {
-                    duration: "60s",
+                    duration: "10s",
                     target: 50,
                 },
                 {
-                    duration: "50s",
+                    duration: "10s",
                     target: 40,
                 },
                 {
-                    duration: "40s",
+                    duration: "10s",
                     target: 30,
                 },
                 {
-                    duration: "30s",
+                    duration: "10s",
                     target: 20,
                 },
                 {
-                    duration: "20s",
+                    duration: "10s",
                     target: 10,
                 },
                 {
