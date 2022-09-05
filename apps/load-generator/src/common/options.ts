@@ -71,7 +71,7 @@ export const fullTestRunOptions: Options = {
                     target: 1,
                 },
             ],
-            gracefulRampDown: "110s",
+            gracefulRampDown: "30s",
         },
     },
 };
