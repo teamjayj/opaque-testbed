@@ -2,6 +2,7 @@ import { createObjectCsvWriter } from "csv-writer";
 import { CsvHeader, CsvRecord, Point, Statistics } from "./types";
 import fs from "fs";
 import ndjson from "ndjson";
+import inquirer from "inquirer";
 
 export async function convertToCSV(
     resultFilename: string,
@@ -116,7 +117,30 @@ async function readRecords(
 }
 
 (async () => {
-    const testRun = "trial-result-potls-register";
+    const { testRunType } = await inquirer.prompt([
+        {
+            name: "testRunType",
+            type: "list",
+            message:
+                "What type of test run result should have its metrics converted to CSV?",
+            choices: ["trial", "full"],
+        },
+    ]);
+
+    const { testRun } = await inquirer.prompt([
+        {
+            name: "testRun",
+            type: "list",
+            message:
+                "What test run result should have its metrics converted to CSV?",
+            choices: [
+                `${testRunType}-result-potls-register`,
+                `${testRunType}-result-potls-login`,
+                `${testRunType}-result-opaque-register`,
+                `${testRunType}-result-opaque-login`,
+            ],
+        },
+    ]);
 
     const metrics = [
         "vus",
@@ -129,5 +153,6 @@ async function readRecords(
 
     for (const metric of metrics) {
         await convertToCSV(testRun, metric);
+        console.log(`Converted ${metric} metric from ${testRun} into CSV`);
     }
 })();
