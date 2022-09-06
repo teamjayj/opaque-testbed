@@ -16,6 +16,7 @@ import {
 } from "./store";
 import { OpaqueCredential } from "./types";
 import { hexStringToUint8Array } from "@teamjayj/opaque-core";
+import { appendFile } from "fs/promises";
 
 const port = process.env.PORT || 3101;
 
@@ -56,6 +57,24 @@ if (isLoadTestingEnvironment()) {
             );
         },
     });
+
+    setInterval(async () => {
+        const { heapUsed, heapTotal, external, rss, arrayBuffers } =
+            process.memoryUsage();
+        const date = new Date();
+
+        await appendFile(
+            "data/used-memory.json",
+            JSON.stringify({
+                date,
+                heapUsed: heapUsed / 1048576,
+                heapTotal: heapTotal / 1048576,
+                external: external / 1048576,
+                rss: rss / 1048576,
+                arrayBuffers: arrayBuffers / 1048576,
+            }) + "\n"
+        );
+    }, 1000);
 }
 
 (async () => {
