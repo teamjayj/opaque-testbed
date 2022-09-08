@@ -32,6 +32,10 @@ export const fullTestRunOptions: Options = {
                 },
                 {
                     duration: "60s",
+                    target: 100,
+                },
+                {
+                    duration: "60s",
                     target: 0,
                 },
             ],
