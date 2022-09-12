@@ -28,6 +28,7 @@ export type Statistics = {
 
 export type CsvRecord = {
     date: string;
-    value: string | number;
     url?: string;
+    vus?: number;
+    value: string | number;
 } & Partial<Statistics>;

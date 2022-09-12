@@ -3,37 +3,40 @@ import { CsvHeader, CsvRecord, Point, Statistics } from "./types";
 import fs from "fs";
 import ndjson from "ndjson";
 import inquirer from "inquirer";
-import { format } from "date-fns";
+import { format, isAfter, isBefore } from "date-fns";
 
-export async function convertToCSV(
+export async function writeToCSV(
     resultFilename: string,
     metric: string,
-    headers: CsvHeader[] = []
-) {
-    const outputDirectory = `./data/output/${resultFilename}`;
-    const records: CsvRecord[] = await readRecords(outputDirectory, metric);
-
-    const csvOutputDirectory = `${outputDirectory}/csv`;
+    records: CsvRecord[]
+): Promise<void> {
+    const csvOutputDirectory = `./data/output/${resultFilename}/csv`;
     fs.mkdirSync(csvOutputDirectory, { recursive: true });
+
+    const independentVariables = [
+        { id: "date", title: "date" },
+        { id: "url", title: "url" },
+        { id: "vus", title: "vus" },
+    ];
+
+    const dependentVariables = [
+        { id: "value", title: "value" },
+        { id: "min", title: "min" },
+        { id: "max", title: "max" },
+        { id: "mean", title: "mean" },
+        { id: "median", title: "median" },
+        { id: "p90", title: "p90" },
+        { id: "p95", title: "p95" },
+    ];
 
     const csvWriter = createObjectCsvWriter({
         path: `${csvOutputDirectory}/${metric}.csv`,
-        header: [
-            { id: "date", title: "date" },
-            { id: "value", title: "value" },
-            { id: "min", title: "min" },
-            { id: "max", title: "max" },
-            { id: "mean", title: "mean" },
-            { id: "median", title: "median" },
-            { id: "p90", title: "p90" },
-            { id: "p95", title: "p95" },
-            { id: "url", title: "url" },
-            ...headers,
-        ],
+        header: [...independentVariables, ...dependentVariables],
     });
 
     await csvWriter.writeRecords(records);
 }
+
 const computeMin = (values: number[]) => Math.min(...values);
 const computeMax = (values: number[]) => Math.max(...values);
 const computeMean = (values: number[]) =>
@@ -84,37 +87,84 @@ function handleBucket(
 
     return computeStatistics(values);
 }
-async function readRecords(
-    outputDirectory: string,
-    metric: string
+
+type VuBucket = {
+    date: Date;
+    vus: number;
+};
+
+async function convertJsonMetricToCsvRecords(
+    testRun: string,
+    metric: string,
+    vuBuckets: VuBucket[] = []
 ): Promise<CsvRecord[]> {
     return new Promise((resolve, reject) => {
+        const outputDirectory = `./data/output/${testRun}`;
         const records: CsvRecord[] = [];
 
         const valueBuckets: Map<string, number[]> = new Map();
+        let currentVuBucketIndex = 0;
 
         fs.createReadStream(`${outputDirectory}/json/${metric}.json`)
             .pipe(ndjson.parse())
             .on("data", (point: Point) => {
                 const { time: date, value, tags } = point.data;
                 const url = tags?.url;
+                const currentDate = new Date(date);
 
-                const stats: Statistics | undefined = handleBucket(
-                    url,
-                    value,
-                    valueBuckets
-                );
+                let vus: number | undefined = undefined;
+
+                if (vuBuckets.length > 0) {
+                    if (
+                        isAfter(
+                            currentDate,
+                            vuBuckets[currentVuBucketIndex].date
+                        )
+                    ) {
+                        if (currentVuBucketIndex + 1 < vuBuckets.length) {
+                            currentVuBucketIndex += 1;
+                        }
+                    }
+
+                    vus = vuBuckets[currentVuBucketIndex].vus;
+                }
+
+                const dependentStatVariables: Statistics | undefined =
+                    handleBucket(url, value, valueBuckets);
+
+                const time = format(currentDate, "H:mm:ss.SSS");
 
                 records.push({
-                    date: format(new Date(date), "H:mm:ss.SSS"),
-                    value,
+                    date,
                     url,
-                    ...stats,
+                    vus,
+                    value,
+                    ...dependentStatVariables,
                 });
             })
             .on("error", (error) => reject(error))
             .on("end", () => resolve(records));
     });
+}
+
+async function getVuBuckets(testRun: string) {
+    const vuRecords: CsvRecord[] = await convertJsonMetricToCsvRecords(
+        testRun,
+        "vus"
+    );
+
+    await writeToCSV(testRun, "vus", vuRecords);
+
+    const vuBuckets: VuBucket[] = [];
+
+    for (const vuRecord of vuRecords) {
+        vuBuckets.push({
+            date: new Date(vuRecord.date),
+            vus: vuRecord.value as number,
+        });
+    }
+
+    return vuBuckets;
 }
 
 (async () => {
@@ -143,8 +193,9 @@ async function readRecords(
         },
     ]);
 
+    const vuBuckets = await getVuBuckets(testRun);
+
     const metrics = [
-        "vus",
         "http_reqs",
         "http_req_duration",
         "http_req_failed",
@@ -153,7 +204,13 @@ async function readRecords(
     ];
 
     for (const metric of metrics) {
-        await convertToCSV(testRun, metric);
+        const records: CsvRecord[] = await convertJsonMetricToCsvRecords(
+            testRun,
+            metric,
+            vuBuckets
+        );
+
+        await writeToCSV(testRun, metric, records);
         console.log(`Converted ${metric} metric from ${testRun} into CSV`);
     }
 })();
