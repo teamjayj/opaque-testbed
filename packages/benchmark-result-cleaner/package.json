@@ -8,6 +8,7 @@
     "build": "tsc",
     "split": "node dist/split.js",
     "convert": "node dist/convert.js",
+    "convert-memory": "node dist/convert-memory.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

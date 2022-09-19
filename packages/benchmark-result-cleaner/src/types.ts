@@ -33,3 +33,13 @@ export type CsvRecord = {
     vus?: number;
     value: string | number;
 } & Partial<Statistics>;
+
+export type MemoryUsageCsvRecord = {
+    date: string;
+    secondsElapsed: number;
+    heapUsed: number;
+    heapTotal: number;
+    external: number;
+    rss: number;
+    arrayBuffers: number;
+};
