@@ -1,9 +1,9 @@
 import { createObjectCsvWriter } from "csv-writer";
-import { CsvHeader, CsvRecord, Point, Statistics } from "./types";
+import { CsvRecord, Point, Statistics } from "./types";
 import fs from "fs";
 import ndjson from "ndjson";
 import inquirer from "inquirer";
-import { format, isAfter, isBefore } from "date-fns";
+import { isAfter, differenceInMilliseconds } from "date-fns";
 
 export async function writeToCSV(
     resultFilename: string,
@@ -15,6 +15,7 @@ export async function writeToCSV(
 
     const independentVariables = [
         { id: "date", title: "date" },
+        { id: "secondsElapsed", title: "seconds_elapsed" },
         { id: "url", title: "url" },
         { id: "vus", title: "vus" },
     ];
@@ -104,6 +105,7 @@ async function convertJsonMetricToCsvRecords(
 
         const valueBuckets: Map<string, number[]> = new Map();
         let currentVuBucketIndex = 0;
+        let originDate: Date | undefined = undefined;
 
         fs.createReadStream(`${outputDirectory}/json/${metric}.json`)
             .pipe(ndjson.parse())
@@ -132,11 +134,20 @@ async function convertJsonMetricToCsvRecords(
                 const dependentStatVariables: Statistics | undefined =
                     handleBucket(url, value, valueBuckets);
 
-                const time = format(currentDate, "H:mm:ss.SSS");
+                let secondsElapsed = 0;
+
+                if (originDate == null) {
+                    originDate = currentDate;
+                } else {
+                    secondsElapsed =
+                        differenceInMilliseconds(currentDate, originDate) /
+                        1000;
+                }
 
                 records.push({
                     date,
                     url,
+                    secondsElapsed,
                     vus,
                     value,
                     ...dependentStatVariables,

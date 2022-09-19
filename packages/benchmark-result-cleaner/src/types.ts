@@ -28,6 +28,7 @@ export type Statistics = {
 
 export type CsvRecord = {
     date: string;
+    secondsElapsed: number;
     url?: string;
     vus?: number;
     value: string | number;
