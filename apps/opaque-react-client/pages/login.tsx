@@ -1,7 +1,10 @@
 import Head from "next/head";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 import styles from "../styles/Home.module.css";
 import React from "react";
+import { createClient } from "@teamjayj/opaque-axios-client";
+import { OpaqueCloudflareClientDriver } from "@teamjayj/opaque-cloudflare-driver";
+import { OpaqueCipherSuite } from "@teamjayj/opaque-core";
 
 class App extends React.Component {
     state = {
@@ -9,27 +12,32 @@ class App extends React.Component {
         password: "",
     };
 
-    handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const user = {
-            username: this.state.username,
-            password: this.state.password,
-        };
-
-        axios
-            .post("http://localhost:3003/login", user)
-            .then((res: AxiosResponse) => {
-                if (res.status === 200) {
-                    if (confirm("Login is Successful")) {
-                        window.location.reload();
-                    }
-                }
-            })
-            .catch((error: AxiosError) => {
-                const { message: errorMessage }: any = error.response?.data;
-                confirm("Login Failed");
+        try {
+            const opaqueClient = await createClient(axios.create(), {
+                driver: new OpaqueCloudflareClientDriver(
+                    OpaqueCipherSuite.P256_SHA256
+                ),
+                server: {
+                    id: "server-id",
+                    hostname: "http://localhost:3101",
+                },
             });
+
+            const success = await opaqueClient.login(
+                this.state.username,
+                this.state.password
+            );
+
+            if (success) {
+                confirm("User Successfully Login");
+            }
+        } catch (error) {
+            confirm("Failed to login user");
+            console.log(error);
+        }
     };
 
     handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +64,9 @@ class App extends React.Component {
                     </Head>
 
                     <main className={styles.main_login}>
-                        <h1 className={styles.title}>OPAQUE <a>Login</a></h1>
+                        <h1 className={styles.title}>
+                            OPAQUE <a>Login</a>
+                        </h1>
 
                         <p className={styles.description}>
                             Log in to an account using OPAQUE

@@ -1,7 +1,10 @@
 import Head from "next/head";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 import styles from "../styles/Home.module.css";
 import React from "react";
+import { OpaqueAxiosClient, createClient } from "@teamjayj/opaque-axios-client";
+import { OpaqueCloudflareClientDriver } from "@teamjayj/opaque-cloudflare-driver";
+import { OpaqueCipherSuite } from "@teamjayj/opaque-core";
 
 class App extends React.Component {
     state = {
@@ -9,27 +12,38 @@ class App extends React.Component {
         password: "",
     };
 
-    handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    client: OpaqueAxiosClient | undefined;
+
+    constructor(props: any) {
+        super(props);
+    }
+
+    handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const user = {
-            username: this.state.username,
-            password: this.state.password,
-        };
-
-        axios
-            .post("http://localhost:3003/register", user)
-            .then((res: AxiosResponse) => {
-                if (res.status === 200) {
-                    if (confirm("User Successfully Registered")) {
-                        window.location.reload();
-                    }
-                }
-            })
-            .catch((error: AxiosError) => {
-                const { message: errorMessage }: any = error.response?.data;
-                confirm("Failed to register user");
+        try {
+            const opaqueClient = await createClient(axios.create(), {
+                driver: new OpaqueCloudflareClientDriver(
+                    OpaqueCipherSuite.P256_SHA256
+                ),
+                server: {
+                    id: "server-id",
+                    hostname: "http://localhost:3101",
+                },
             });
+
+            const success = await opaqueClient.register(
+                this.state.username,
+                this.state.password
+            );
+
+            if (success) {
+                confirm("User Successfully Registered");
+            }
+        } catch (error) {
+            confirm("Failed to register user");
+            console.log(error);
+        }
     };
 
     handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {

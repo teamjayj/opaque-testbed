@@ -12,6 +12,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@teamjayj/opaque-axios-client": "^0.2.0",
+    "@teamjayj/opaque-cloudflare-driver": "^0.3.0",
+    "@teamjayj/opaque-core": "^0.3.0",
     "axios": "^0.27.2",
     "next": "^12.2.5",
     "react": "^18.2.0",
